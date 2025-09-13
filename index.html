@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marco Mancinelli - Scrittore ed Editor</title>
+    <style>
+        body {
+            font-family: 'Georgia', serif;
+            background-color: #ffffff; /* Pastello viola chiaro */
+            color: #4a4a4a;
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        header {
+            text-align: center;
+            padding: 40px 0;
+            background-color: #f4f4ce; /* Pastello azzurro chiaro */
+        }
+        .bio-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+        .bio-photo {
+            width: 300px;
+            height: 400px;
+            border-radius: 10px;
+            object-fit: cover;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .bio-text {
+            max-width: 600px;
+            text-align: center;
+            font-style: italic;
+        }
+        .books-section {
+            padding: 40px 0;
+        }
+        .books-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        .book-card {
+            background-color: #fffaf0; /* Pastello beige */
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+        .book-card:hover {
+            transform: translateY(-5px);
+        }
+        .book-cover {
+            width: 300px;
+            height: 400px;
+            object-fit: cover;
+            border-radius: 10px;
+            margin-bottom: 15px;
+        }
+        .book-title {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #6b7280;
+            margin-bottom: 5px;
+        }
+        .book-meta {
+            font-size: 0.9em;
+            color: #9ca3af;
+            margin-bottom: 10px;
+        }
+        .book-synopsis {
+            font-size: 0.95em;
+            margin-bottom: 15px;
+            color: #4a4a4a;
+        }
+        .buy-link {
+            display: inline-block;
+            background-color: #62894E; /* Pastello verde menta */
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+        .buy-link:hover {
+            background-color: #8CC470;
+        }
+        .reviews {
+            margin-top: 15px;
+        }
+        .review {
+            margin-bottom: 10px;
+            padding: 10px;
+            background-color: #DEDCBC; /* Pastello azzurro */
+            border-radius: 5px;
+        }
+        .stars {
+            color: #fbbf24; /* Giallo dorato per stelle */
+            font-size: 1.2em;
+            margin-bottom: 5px;
+        }
+        footer {
+            text-align: center;
+            padding: 20px;
+            background-color: #e8f4f8;
+            color: #6b7280;
+            font-size: 0.9em;
+        }
+        @media (max-width: 768px) {
+            .books-grid {
+                grid-template-columns: 1fr;
+            }
+            .bio-section {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="bio-section">
+                <img src="./assets/foto_bio.jpg" alt="Foto di Marco Mancinelli" class="bio-photo">
+                <div class="bio-text">
+                    <h1>Marco Mancinelli</h1>
+                    <p>Marco Mancinelli vive e lavora a Roma. Ha pubblicato con <strong>Bakemono Lab</strong> la raccolta di racconti <strong>Come scatole di latta</strong> (2023) e i romanzi <strong>Di là dall’oscurità e nel tempo</strong> (2017), <strong>Arizona baby</strong> (2018), <strong>Lucille</strong> (2019), <strong>Il risveglio di Enos</strong> (2021), <strong>Conrad Noel</strong> (2022), <strong>Il sogno degli amanti perduti</strong> (2023), <strong>Il tagliacarte d’argento</strong> (2024). È inoltre autore dei racconti <strong>Il giardino dei bambini storti</strong>, <strong>I ciliegi fioriranno domani</strong>, <strong>Il ponte sul ruscello di peonie</strong> e <strong>Oltre le nuvole è certo primavera</strong> pubblicati nelle antologie <strong>Yokai</strong> (Bakemono Lab) dedicate al folklore giapponese.
+Nel 2025, per Bakemono Lab ha inoltre ideato, scritto e pubblicato il gioco di ruolo <strong>Clara's Chronicles</strong>. In forma indipendente è autore dei romanzi <strong>Cyberblood</strong> (2012), <strong>In equilibrio sul silenzio</strong> (2013), <strong>Nero Uomo</strong> (2014), <strong>2068 – L’uomo che distrusse il futuro</strong> (2015) e <strong>L’autunno delle tempeste</strong> (2024).</p>
+                </div>
+            </div>
+        </header>
+
+        <section class="books-section">
+            <h2 style="text-align: center; color: #6b7280; margin-bottom: 30px;">I libri di Marco Mancinelli</h2>
+            <div id="books-container" class="books-grid"></div>
+        </section>
+    </div>
+
+    <footer>
+        <p>Marco Mancinelli - 2025 Tutti i diritti riservati</p>
+    </footer>
+
+    <script>
+        // Array dei libri - Aggiungi nuovi libri qui per estendere facilmente
+        const books = [
+            {
+                cover: './assets/gdr.jpg',
+                title: "Clara's Chronicles - Manuale di Gioco",
+                publisher: 'Bakemono Lab',
+                year: '2025',
+                synopsis: "Italia, anni Venti. L'Ordine della Verbena indaga crimini che sfidano il comune senso del razionale.",
+                buyLink: 'https://bakemonolab.it/prodotto/gioco-di-ruolo-di-marco-mancinelli/',
+                reviews: [
+                    { text: 'Regole e sessioni di gioco in un unico volume.', stars: 5 },
+                    { text: 'Ambientazione suggestiva e regolamento intuitivo.', stars: 5 }
+                ]
+            },
+            {
+                cover: './assets/taglia.jpg',
+                title: "Il Tagliacarte d'argento",
+                publisher: 'Bakemono Lab',
+                year: '2024',
+                synopsis: "Richmond 1823. Lo spettro della morte sta per calare sul giovane Edgar e la sua passione d'amore.",
+                buyLink: 'https://www.amazon.it/tagliacarte-dargento-Unavventura-giovane-Edgar/dp/B0DL5D863M',
+                reviews: [
+                    { text: 'Un mistery per ragazzi molto apprezzabile e scritto divinamente.', stars: 5 },
+                    { text: 'Un protagonista con nome di spicco in versione adolescente...che scelta azzeccata!.', stars: 5 }
+                ]
+            },
+            {
+                cover: './assets/sogno.jpg',
+                title: 'Il sogno degli amanti perduti',
+                publisher: 'Bakemono Lab',
+                year: '2023',
+                synopsis: "È la primavera del 1776. La famiglia Ward è in viaggio d’affari in Toscana. La giovane Ann sta per vivere la più grande avventura della sua vita.",
+                buyLink: 'https://www.amazon.it/sogno-degli-amanti-perduti-Unavventura/dp/B0CM1DF9MH',
+                reviews: [
+                    { text: 'La vena gotica, Mistery, Ghost...insomma ci siamo capiti!', stars: 5 },
+                    { text: 'Una storia da leggere in un pomeriggio di tempesta con la pioggia che batte sul vetro.', stars: 5 }
+                ]
+            },
+            {
+                cover: './assets/arizona.jpg',
+                title: 'Arizona Baby',
+                publisher: 'Bakemono Lab',
+                year: '2018',
+                synopsis: 'È bella, vendicativa e non sa ballare. Ma una volta era sposata con Dio!',
+                buyLink: 'https://bakemonolab.it/prodotto/arizona-baby/',
+                reviews: [
+                    { text: "Insomma un bel libro. C'è poco da aggiungere. Per tutti gli amanti del noir e delle storie belle.", stars: 5 },
+                    { text: 'Vi consiglio di incontrare Arizona Baby almeno una volta nella vita.', stars: 5 }
+                ]
+            },
+              {
+                cover: './assets/oscurita.jpg',
+                title: "Di là dall'oscurità e nel tempo",
+                publisher: 'Bakemono Lab',
+                year: '2017',
+                synopsis: 'Questa è la mia storia ed è anche la storia di Viola. Uno di noi due forse non esiste, e io non ho ancora capito chi è!',
+                buyLink: 'https://bakemonolab.it/prodotto/la-dalloscurita-nel-tempomarco-mancinelli/',
+                reviews: [
+                    { text: "Il libro, o il viaggio, è stato una bellissima scoperta…", stars: 5 },
+                    { text: 'Sa far riflettere e sa emozionare.', stars: 5 }
+                ]
+            },
+            {
+                cover: './assets/tempeste.jpg',
+                title: "L'autunno delle tempeste",
+                publisher: 'Indipendente',
+                year: '2024',
+                synopsis: 'Un viaggio attraverso le onde del passato per ritrovare la voce perduta.',
+                buyLink: 'https://www.amazon.it/Lautunno-delle-tempeste-Marco-Mancinelli/dp/B0DHQJVK4B',
+                reviews: [
+                    { text: "Mi ha anche molto incuriosito sulla pratica del surf, che prima o poi voglio sperimentare", stars: 5 },
+                    { text: 'Storia evocativa. Assolutamente da leggere', stars: 5 }
+                ]
+            },
+             {
+                cover: './assets/distrusse.jpg',
+                title: "2068 - L'uomo che distrussse il futuro",
+                publisher: 'Indipendente',
+                year: '2015',
+                synopsis: "Voglio distruggere il Governo unico. Poi potrò pure marcire all'inferno. Finché sarò vivo, loro dovranno avere paura di me",
+                buyLink: 'https://www.amazon.it/2068-1-Marco-Mancinelli/dp/1542307600',
+                reviews: [
+                    { text: "2068 è uno di quei thriller che ti cattura fin dalle prime pagine", stars: 5 },
+                    { text: "L'atmosfera ed il fascino della pioggia vi avvolgeranno...", stars: 5 }
+                ]
+            },
+            {
+                cover: './assets/nerouomo.jpg',
+                title: "Nero Uomo (#2 serie Cyberblood)",
+                publisher: 'Indipendente',
+                year: '2014',
+                synopsis: "La regola in città è sempre la stessa: se chiedi aiuto ai peggiori, il peggio è quello che devi aspettarti.",
+                buyLink: 'https://store.youcanprint.it/nero-uomo/b/10626f82-7e6b-5066-8eaf-4bb6621345b9?',
+                reviews: [
+                    { text: "Il libro è rivolto a chi non vuole avere pillole indorate.", stars: 4 },
+                    { text: " La trama è ben progettata, quindi non mancherà di sorprendervi ", stars: 5 }
+                ]
+            },
+             {
+                cover: './assets/equilibrio.jpg',
+                title: "In equilibrio sul silenzio",
+                publisher: 'Indipendente',
+                year: '2013',
+                synopsis: "Modesto vive al di sotto delle proprie emozioni. Ed è felice così. Nulla lo turba e niente sembra poter sconvolgere la sua pigra, vuota e distaccata esistenza..",
+                buyLink: 'https://www.amazon.it/equilibrio-sul-silenzio-Marco-Mancinelli/dp/8891143065',
+                reviews: [
+                    { text: "Ho letto un libro o ho vissuto una storia?", stars: 5 },
+                    { text: "Una lettura di spessore che conserva la giusta dose di ironia necessaria a compiere nuovi passi.", stars: 5 }
+                ]
+            },
+            {
+                cover: './assets/cyberblood.jpg',
+                title: "Cyberblood (#1 serie Cyberblood)",
+                publisher: 'Indipendente',
+                year: '2012',
+                synopsis: "Se chiedi aiuto ai peggiori, il peggio è quello che devi aspettarti.",
+                buyLink: 'https://store.youcanprint.it/cyberblood/b/c1808f1e-4ab7-5d97-9773-04bffc5a6d3a',
+                reviews: [
+                    { text: "il cybercrimine, l'hacking, la politica ed il SISDE...", stars: 5 },
+                    { text: "Un libro tosto, tosto come i suoi personaggi ciancicati dalla vita e risputati in una Roma noir che viaggia su fibra ottica", stars: 5 }
+                ]
+            },
+            {
+                cover: './assets/scatole.jpg',
+                title: "Come scatole di latta (racconti)",
+                publisher: 'Bakemono Lab',
+                year: '2023',
+                synopsis: "Otto racconti, otto storie di persone comuni che raccontano le ferite dell'umanità.",
+                buyLink: 'https://www.amazon.it/Come-scatole-latta-Hachi-Vol-ebook/dp/B0C2PRN42L',
+                reviews: [
+                    { text: "L'ultimo racconto mi ha devastata", stars: 5 },
+                    { text: "Quando leggi questi racconti non sai quale ferita profonda stai per aprire dentro te stesso...", stars: 5 }
+                ]
+            },
+             {
+                cover: './assets/spiriti.jpg',
+                title: "Yokai - Spiriti Inquieti (racconti)",
+                publisher: 'Bakemono Lab',
+                year: '2017',
+                synopsis: "Il giardino dei bambni storti, un'intensa fiaba dark.",
+                buyLink: 'https://www.amazon.it/Yokai-Spiriti-inquieti-Marco-Mancinelli/dp/8894826058',
+                reviews: [
+                    { text: "Quattro racconti uno più affascinante dell'altro...", stars: 5 },
+                    { text: "Un volume riuscito, buon esordio per questo progetto curato da una valida casa editrice indipendente", stars: 5 }
+                ]
+            },
+            {
+                cover: './assets/volpe.jpg',
+                title: "Yokai - La notte della volpe (racconti)",
+                publisher: 'Bakemono Lab',
+                year: '2019',
+                synopsis: "I ciliegi fioriranno domani, un racconto d'amore impossibile.",
+                buyLink: 'https://bakemonolab.it/prodotto/yokai-la-notte-della-volpe/',
+                reviews: [
+                    { text: "L'atmosfera, magica e misteriosa, a volte da sogno, in altri casi da incubo...", stars: 4 },
+                    { text: "Autori diversi che sono riusciti a creare atmosfere uniche", stars: 5 }
+                ]
+            },
+            {
+                cover: './assets/smarrite.jpg',
+                title: "Yokai - Anime Smarrite (racconti)",
+                publisher: 'Bakemono Lab',
+                year: '2019',
+                synopsis: "Il ponte sul ruscello di peonie, un racconto sul filo dell'attesa.",
+                buyLink: 'https://bakemonolab.it/prodotto/yokai-anime-smarrite/',
+                reviews: [
+                    { text: "Cinque superbi autori per cinque racconti...", stars: 5 },
+                    { text: "Chiusura ottimale, poetica, romantica, con Marco Mancinelli e il suo fascinoso ponte sul ruscello di peonie", stars: 5 }
+                ]
+            },
+             {
+                cover: './assets/nuvole.jpg',
+                title: "Yokai - Oltre le nuvole (racconti)",
+                publisher: 'Bakemono Lab',
+                year: '2021',
+                synopsis: "Oltre le nuvole è certo primavera, un racconto perso nel sogno.",
+                buyLink: 'https://bakemonolab.it/prodotto/yokai-oltrelenuvole/',
+                reviews: [
+                    { text: "Ogni volume della serie Yokai, di Bakemono Lab, è un viaggio nelle leggende e nel folclore giapponese", stars: 4 },
+                    { text: "", stars: 5 }
+                ]
+            },
+            {
+                cover: './assets/storti.jpg',
+                title: "Il giardino dei bambini storti (illustrato da Anja Malinowska)",
+                publisher: 'Bakemono Lab',
+                year: '2023',
+                synopsis: "Un’intensa fiaba dark, ispirata dalla creatura del folclore giapponese Yuki-onna, la donna delle nevi.",
+                buyLink: 'https://www.amazon.it/giardino-dei-bambini-storti/dp/8894826627',
+                reviews: [
+                    { text: "In quanti pezzi può distruggersi un cuore?", stars: 5 },
+                    { text: "Illustrazioni e storia pazzeschi", stars: 5 }
+                ]
+            },
+             {
+                cover: './assets/it.jpg',
+                title: "Italia. Ieri, oggi, domani",
+                publisher: "L'Antidiplomatico - L.A.D. Edizoini",
+                year: '2023',
+                synopsis: "Una raccolta di racconti selezionati da Edoardo Laudisi e Antonio Di Siena. Il giorno del rosso, racconto di Marco Mancinelli.",
+                buyLink: 'https://www.lafeltrinelli.it/italia-ieri-oggi-domani-libro-vari/e/9791280401083',
+                reviews: [
+                    { text: "Racconti che graffiano il cuore", stars: 5 },
+                    { text: "Crudi e reali allo stesso tempo", stars: 5 }
+                ]
+            }
+        ];
+
+        // Funzione per generare stelle
+        function generateStars(stars) {
+            return '★'.repeat(stars) + '☆'.repeat(5 - stars);
+        }
+
+        // Genera HTML per i libri
+        function renderBooks() {
+            const container = document.getElementById('books-container');
+            const html = books.map(book => `
+                <div class="book-card">
+                    <img src="${book.cover}" alt="Copertina di ${book.title}" class="book-cover">
+                    <div class="book-title">${book.title}</div>
+                    <div class="book-meta">${book.publisher} - ${book.year}</div>
+                    <div class="book-synopsis">${book.synopsis}</div>
+                    <a href="${book.buyLink}" target="_blank" class="buy-link">Acquista Ora</a>
+                    <div class="reviews">
+                        ${book.reviews.map(review => `
+                            <div class="review">
+                                <div class="stars">${generateStars(review.stars)}</div>
+                                <p>${review.text}</p>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `).join('');
+            container.innerHTML = html;
+        }
+
+        // Esegui al caricamento
+        window.addEventListener('load', renderBooks);
+    </script>
+</body>
+</html>
